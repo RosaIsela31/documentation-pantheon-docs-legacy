@@ -13,6 +13,7 @@ const pageQuery = `{
           }
           frontmatter {
             title
+            reviewed
           }
           excerpt(pruneLength: 50000)
         }

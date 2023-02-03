@@ -6,6 +6,7 @@ import {
   Snippet
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
+import moment from 'moment';
 import propTypes from "prop-types";
 import Layout from "../layout/layout"
 import SEO from "../layout/seo"
@@ -13,6 +14,8 @@ import "./style.css"
 
 const Hit = ({ hit }) => {
   const pantheonDocsUrl = "https://pantheon.io/docs";
+  const convertedDate = moment(hit.reviewed).format('MMM DD, YYYY');
+
   return (
     <div>
       <Link to={hit.slug} >
@@ -24,6 +27,9 @@ const Hit = ({ hit }) => {
         <span className="results-item-url">{pantheonDocsUrl}{hit.slug}</span>
       </p>
       <Snippet attribute="excerpt" hit={hit} tagName="mark" />
+      <span className="results-item-date">
+        {convertedDate === 'Invalid date' ? '' : convertedDate}
+      </span>
     </div>
   );
 };
