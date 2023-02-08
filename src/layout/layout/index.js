@@ -13,6 +13,7 @@ const searchClient = algoliasearch(
 
 const Layout = (props) => {
   const pageType = props.type ? props.type : "default"
+  const slugKey = props.children[0]?._owner?.key
 
   return (
     <InstantSearch
@@ -20,7 +21,7 @@ const Layout = (props) => {
       indexName={config.search.indexName}
     >
       <div className="pantheon-docs">
-        <Header page={pageType} />
+        <Header page={pageType} slugKey={slugKey} />
         {props.children}
         <Footer />
       </div>

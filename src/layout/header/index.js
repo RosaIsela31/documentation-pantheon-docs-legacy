@@ -17,9 +17,10 @@ if (isSearchEnabled && config.search.indexName) {
   });
 }
 
-const isSearchPage = typeof document !== "undefined" && document.URL.includes("search");
+const Header = ({ data, slugKey }) => {
+  const isSearchPage = slugKey?.includes('search')
 
-const Header = ({ data, page }) => (
+  return (
   <>
     <nav className="navbar navbar-fixed-top pio-docs-nav" role="navigation" id="header">
     <div id="skiptocontent"><a href="#docs-main">skip to main content</a></div>
@@ -183,7 +184,7 @@ const Header = ({ data, page }) => (
       </div>
     </nav>
   </>
-)
+)}
 
 export default props => (
 

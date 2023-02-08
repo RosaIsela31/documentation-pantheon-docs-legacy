@@ -17,14 +17,16 @@ import "./style.css"
 const Hit = ({ hit }) => {
   const pantheonDocsUrl = "https://pantheon.io/docs";
   const convertedDate = moment(hit.reviewed).format('MMM DD, YYYY');
+  
+  const correctSlug = hit.slug.startsWith('/') ? hit.slug : `/${hit.slug}`
 
   return (
-    <Link to={hit.slug} >
+    <Link to={correctSlug} >
       <div>
         <Highlight attribute="title" hit={hit} tagName="mark" />
       </div>
       <p>
-        <span className="results-item-url">{pantheonDocsUrl}{hit.slug}</span>
+        <span className="results-item-url">{pantheonDocsUrl}{correctSlug}</span>
       </p>
       <Snippet attribute="excerpt" hit={hit} tagName="mark" />
       <span className="results-item-date">
