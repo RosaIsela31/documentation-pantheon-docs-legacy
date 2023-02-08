@@ -68,3 +68,18 @@
     font-size: 12px;
     color: #999999;
   }
+
+  .search-page-sort-by-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #000;
+  }
+
+  .search-page-sort-by-container a {
+    color: #000;
+  }
+
+  .search-page-hits-container .search-page-sort-by-container .sortby_active {
+    text-decoration: underline; 
+  }

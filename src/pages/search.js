@@ -1,9 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Hits,
   Pagination,
   Highlight,
-  Snippet
+  Snippet,
+  Stats,
+  Index
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
 import moment from 'moment';
@@ -17,12 +19,10 @@ const Hit = ({ hit }) => {
   const convertedDate = moment(hit.reviewed).format('MMM DD, YYYY');
 
   return (
-    <div>
-      <Link to={hit.slug} >
-        <div>
-          <Highlight attribute="title" hit={hit} tagName="mark" />
-        </div>
-      </Link>
+    <Link to={hit.slug} >
+      <div>
+        <Highlight attribute="title" hit={hit} tagName="mark" />
+      </div>
       <p>
         <span className="results-item-url">{pantheonDocsUrl}{hit.slug}</span>
       </p>
@@ -30,7 +30,7 @@ const Hit = ({ hit }) => {
       <span className="results-item-date">
         {convertedDate === 'Invalid date' ? '' : convertedDate}
       </span>
-    </div>
+    </Link>
   );
 };
 
@@ -42,6 +42,12 @@ Hit.propTypes = {
 };
 
 const Search = () => {
+  const [sortBy, setSortBy] = useState(false)
+
+  const handleClick = (value) => {
+    setSortBy(value);
+  };
+
   return (
     <Layout>
       <SEO image={"/images/assets/default-thumb-doc.png"} title="Search" />
@@ -49,7 +55,25 @@ const Search = () => {
         <main className=" doc-content-well" id="docs-main">
           <h1 className="title">Search Results</h1>
           <div className="search-page-hits-container">
-            <Hits hitComponent={Hit} />
+            <div className="search-page-sort-by-container">
+              <Stats
+                translations={{
+                  stats(nbHits) {
+                    return `${nbHits} results`
+                  },
+                }}
+              />
+              <span>
+                Sort by: {' '}
+                <a href="#" className={sortBy !== "date" ? "sortby_active" : ''} onClick={() => { handleClick('relevance') }}>Relevance</a> |
+                <a href="#" className={sortBy === "date" ? "sortby_active" : ''} onClick={() => { handleClick('date') }}>Date</a>
+              </span>
+            </div>
+            <Index
+              indexName={sortBy === 'date' ? "legacy-pantheon-docs-date-desc" : "legacy-pantheon-docs"}
+            >
+              <Hits hitComponent={Hit} />
+            </Index>
             <Pagination />
           </div>
         </main>
